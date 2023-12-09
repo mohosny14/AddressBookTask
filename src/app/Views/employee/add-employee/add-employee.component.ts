@@ -18,10 +18,10 @@ import Swal from 'sweetalert2';
 export class AddEmployeeComponent implements OnInit {
 
   employeeForm: FormGroup;
+  image : any
   maxDate: string = '';
   jobTitles : Job [] = [];
   departments :Department [] = [];
-  Image : any
   employee: EmployeeModel = {} as EmployeeModel
 
 
@@ -54,31 +54,29 @@ export class AddEmployeeComponent implements OnInit {
 
   onSubmit() {
     if (this.employeeForm.valid) {
-      alert('1');
-      const employeeData = this.employeeForm.value;
-      employeeData.photo = this.Image;
-      employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
-      //const formData = new FormData();
-    // formData.append('fullName', employeeData.fullName);
-    // formData.append('jobId', employeeData.jobId);
-    // formData.append('departmentId', employeeData.departmentId);
-    // formData.append('mobileNumber', employeeData.mobileNumber);
-    // formData.append('birthDate', this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss')??'')
-    // formData.append('adress', employeeData.adress);
-    // formData.append('email', employeeData.email);
-    console.log(employeeData);
-    //formData.append('photo', employeeData.photo);
-    // if(this.Image){
-    //   formData.append('photo',this.Image,'imageName')
-    //  }
+       const employeeData = this.employeeForm.value;
+      // employeeData.photo = this.Image;
+      // employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
+      const formData = new FormData();
+    formData.append('fullName', employeeData.fullName);
+    formData.append('jobId', employeeData.jobId);
+    formData.append('departmentId', employeeData.departmentId);
+    formData.append('mobileNumber', employeeData.mobileNumber);
+    formData.append('password', employeeData.password);
+    formData.append('birthDate', this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss')??'')
+    formData.append('adress', employeeData.adress);
+    formData.append('email', employeeData.email);
+    if(this.image){
+      formData.set('photo',this.image)
+     }
 
     // Object.keys(employeeData).forEach((key) => {
     //   employeeModel.append(key, employeeData[key]);
     // });
 
       // Perform submission logic (e.g., send data to server)
-      console.log('Employee data submitted:', employeeData);
-        this.employeeService.createEmployee(employeeData).subscribe(res => {
+      console.log('Employee data submitted:', formData);
+        this.employeeService.createEmployee(formData).subscribe(res => {
           if (res.succeeded) {
             this.router.navigate(['/clients/all-clients'])
           }
@@ -146,10 +144,7 @@ export class AddEmployeeComponent implements OnInit {
       })
     }
 
-    UploadFile(event: any): void {
-      const fileList: FileList = event.target.files;
-      if (fileList.length > 0) {
-        this.Image = fileList[0];
-      }
+    UploadFile(event: any) {
+      this.image = event.target.files[0];
     }
 }

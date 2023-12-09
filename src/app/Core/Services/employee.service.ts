@@ -14,6 +14,10 @@ export class EmployeeService {
     return this.commonHttp.CommonPostRequests(model, environment.baseUrl + HttPaths.API_CREATE_EMPLOYEE);
   }
 
+  editEmployee(model: FormData) {
+    return this.commonHttp.CommonPutRequests(model, environment.baseUrl + HttPaths.API_EDIT_EMPLOYEE);
+  }
+
   getAllEmployeess() {
     return this.commonHttp.CommonGetRequests(environment.baseUrl + HttPaths.API_GET_ALL_EMPLOYEES);
   }

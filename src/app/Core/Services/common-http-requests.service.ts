@@ -12,6 +12,9 @@ export class CommonHttpRequestsService {
   CommonPostRequests(model: any, url: string): Observable<any> {
     return this.http.post<any>(`${url}`, model);
   }
+  CommonPutRequests(model: any, url: string): Observable<any> {
+    return this.http.put<any>(`${url}`, model);
+  }
 
   CommonGetRequests(url: string): Observable<any> {
     return this.http.get<any>(`${url}`);

@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Department } from 'src/app/Core/Models/department';
-import { Employee } from 'src/app/Core/Models/employee';
+import { Employee, EmployeeModel } from 'src/app/Core/Models/employee';
 import { Job } from 'src/app/Core/Models/job';
 import { DepartmentService } from 'src/app/Core/Services/department.service';
 import { EmployeeService } from 'src/app/Core/Services/employee.service';
@@ -12,23 +14,44 @@ import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.scss']
+  styleUrls: ['./employee-list.component.scss','../add-employee/add-employee.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   jobTitles : Job [] = [];
   departments :Department [] = [];
   //cols: any[] = [];
+  edit:boolean=false
+
+  employeeForm: FormGroup;
+  image : any
+  maxDate: string = '';
+
   
   constructor(private employeeService: EmployeeService,
     private departmentService : DepartmentService,
     private jobService : JobService,
+    private datePipe: DatePipe,
     //public dialog: MatDialog
-    ) {}
+    private fb:FormBuilder
+    ) {
+      this.employeeForm = this.fb.group({
+        fullName: ['', Validators.required],
+        jobId: ['', [Validators.required, Validators.pattern(/^-?\d+\.?\d*$/)]],
+        departmentId: ['', [Validators.required, Validators.pattern(/^-?\d+\.?\d*$/)]],
+        mobileNumber: ['', Validators.required],
+        birthDate: ['', Validators.required],
+        adress: ['',Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        id: ['', Validators.required],
+        photo: null
+      });
+    }
   ngOnInit(): void {
     this.getEmployees();
-    // this.getDepartments();
-    // this.getJobs();
+    this.getDepartments();
+    this.getJobs();
 
   }
 
@@ -86,7 +109,20 @@ export class EmployeeListComponent implements OnInit {
     })
   }
 
-  editEmployee(employee: Employee) {
+  editEmployee(employee: any) {
+    this.edit=true
+    this.employeeForm.patchValue({
+      fullName: employee.fullName,
+      jobId: employee.jobId,
+      departmentId: employee.departmentId,
+      mobileNumber: employee.mobileNumber,
+      birthDate: employee.birthDate,
+      adress: employee.adress,
+      email: employee.email,
+      password: employee.password,
+      photo: employee.photo,
+      id: employee.id,
+    })
     // const dialogRef = this.dialog.open(EditEmployeeComponent, {
     //   width: '400px',
     //   data: { ...employee }, // Pass a copy of the employee data to the dialog
@@ -137,5 +173,75 @@ export class EmployeeListComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'employeesList' + '.xlsx');
+  }
+
+  onSubmit() {
+    if (this.employeeForm.valid) {
+       const employeeData = this.employeeForm.value;
+      // employeeData.photo = this.Image;
+      // employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
+      const formData = new FormData();
+    formData.append('fullName', employeeData.fullName);
+    formData.append('jobId', employeeData.jobId);
+    formData.append('departmentId', employeeData.departmentId);
+    formData.append('mobileNumber', employeeData.mobileNumber);
+    formData.append('password', employeeData.password);
+    formData.append('birthDate', this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss')??'')
+    formData.append('adress', employeeData.adress);
+    formData.append('email', employeeData.email);
+    formData.append('id', employeeData.id);
+    if(this.image){
+      formData.set('photo',this.image)
+     }
+
+    // Object.keys(employeeData).forEach((key) => {
+    //   employeeModel.append(key, employeeData[key]);
+    // });
+
+      // Perform submission logic (e.g., send data to server)
+      console.log('Employee data submitted:', formData);
+      this.edit=false  
+      this.employeeService.editEmployee(formData).subscribe(res => {
+          if (res.succeeded) {
+            this.getEmployees()
+            Swal.fire({
+              icon: 'success',
+              text: 'Updated Successfully!',
+            })
+            this.employeeForm.patchValue({
+              
+            })
+            // this.router.navigate(['/clients/all-clients'])
+          }
+          else {
+            Swal.fire({
+              icon: 'error',
+              text: res.message,
+            })
+          }
+        }, err => {
+  
+          // if (err.error.errors && err.error.errors.length > 0) {
+          //   let arr = []
+          //   for (const key in err.error.errors) {
+          //     if (Array.isArray(err.error.errors[key])) {
+          //       arr.push(err.error.errors[key])
+          //     }
+          //   }
+          //   //this.openErrorToaster(arr.join(','))
+          // }
+          // else {
+          //   Swal.fire({
+          //     icon: 'error',
+          //     text: err.error.message,
+          //   })
+          // }
+        })
+  
+      }
+    }
+
+  UploadFile(event: any) {
+    this.image = event.target.files[0];
   }
 }
