@@ -32,7 +32,11 @@ export class LoginComponent implements OnInit  {
         Swal.fire({
           icon: 'success',
           text:'Login successful!',
-        }) 
+        })
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userId', response.data.userId)
+        localStorage.setItem('lastName', response.data.lastName)
+        localStorage.setItem('firstName', response.data.firstName)
         this.router.navigate(['/add-employee']);
       }else{
         Swal.fire({
@@ -42,6 +46,10 @@ export class LoginComponent implements OnInit  {
       }
     }, error => {
       console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        text: error.error.message,
+      })
     });
   }
 

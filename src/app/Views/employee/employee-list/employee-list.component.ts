@@ -20,19 +20,17 @@ export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   jobTitles : Job [] = [];
   departments :Department [] = [];
-  //cols: any[] = [];
   edit:boolean=false
 
   employeeForm: FormGroup;
   image : any
   maxDate: string = '';
 
-  
+
   constructor(private employeeService: EmployeeService,
     private departmentService : DepartmentService,
     private jobService : JobService,
     private datePipe: DatePipe,
-    //public dialog: MatDialog
     private fb:FormBuilder
     ) {
       this.employeeForm = this.fb.group({
@@ -45,7 +43,7 @@ export class EmployeeListComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
         id: ['', Validators.required],
-        photo: null
+        photo: [null, Validators.required],
       });
     }
   ngOnInit(): void {
@@ -60,16 +58,16 @@ export class EmployeeListComponent implements OnInit {
       next: (res) => {
         if(res.succeeded)
         {
-           this.employees = res.data;      
-           console.log(this.employees) 
-     
+           this.employees = res.data;
+           console.log(this.employees)
+
         }
         else{
-          this.employees = []          
+          this.employees = []
         }
-      }, 
+      },
       error: (err) => {
-         this.employees = []           
+         this.employees = []
       }
     })
   }
@@ -78,15 +76,15 @@ export class EmployeeListComponent implements OnInit {
       next: (res) => {
         if(res)
         {
-          this.departments = res.data;  
-          console.log(this.departments);             
+          this.departments = res.data;
+          console.log(this.departments);
         }
         else{
-         this.departments = []          
+         this.departments = []
         }
-      }, 
+      },
       error: (err) => {
-        this.departments = []          
+        this.departments = []
       }
     })
   }
@@ -96,15 +94,15 @@ export class EmployeeListComponent implements OnInit {
       next: (res) => {
         if(res.succeeded)
         {
-           this.jobTitles = res.data;       
-     
+           this.jobTitles = res.data;
+
         }
         else{
-          this.jobTitles = []          
+          this.jobTitles = []
         }
-      }, 
+      },
       error: (err) => {
-         this.jobTitles = []           
+         this.jobTitles = []
       }
     })
   }
@@ -123,21 +121,6 @@ export class EmployeeListComponent implements OnInit {
       photo: employee.photo,
       id: employee.id,
     })
-    // const dialogRef = this.dialog.open(EditEmployeeComponent, {
-    //   width: '400px',
-    //   data: { ...employee }, // Pass a copy of the employee data to the dialog
-    // });
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   // Handle the result after the dialog is closed
-    //   if (result) {
-    //     // Update the employee data in your list
-    //     const index = this.employees.findIndex((e) => e.id === result.id);
-    //     if (index !== -1) {
-    //       this.employees[index] = result;
-    //     }
-    //   }
-    // });
   }
 
   deleteEmployee(employeeId: number) {
@@ -178,9 +161,7 @@ export class EmployeeListComponent implements OnInit {
   onSubmit() {
     if (this.employeeForm.valid) {
        const employeeData = this.employeeForm.value;
-      // employeeData.photo = this.Image;
-      // employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
-      const formData = new FormData();
+     const formData = new FormData();
     formData.append('fullName', employeeData.fullName);
     formData.append('jobId', employeeData.jobId);
     formData.append('departmentId', employeeData.departmentId);
@@ -194,13 +175,8 @@ export class EmployeeListComponent implements OnInit {
       formData.set('photo',this.image)
      }
 
-    // Object.keys(employeeData).forEach((key) => {
-    //   employeeModel.append(key, employeeData[key]);
-    // });
-
-      // Perform submission logic (e.g., send data to server)
       console.log('Employee data submitted:', formData);
-      this.edit=false  
+      this.edit=false
       this.employeeService.editEmployee(formData).subscribe(res => {
           if (res.succeeded) {
             this.getEmployees()
@@ -209,7 +185,7 @@ export class EmployeeListComponent implements OnInit {
               text: 'Updated Successfully!',
             })
             this.employeeForm.patchValue({
-              
+
             })
             // this.router.navigate(['/clients/all-clients'])
           }
@@ -220,7 +196,7 @@ export class EmployeeListComponent implements OnInit {
             })
           }
         }, err => {
-  
+
           // if (err.error.errors && err.error.errors.length > 0) {
           //   let arr = []
           //   for (const key in err.error.errors) {
@@ -237,7 +213,7 @@ export class EmployeeListComponent implements OnInit {
           //   })
           // }
         })
-  
+
       }
     }
 

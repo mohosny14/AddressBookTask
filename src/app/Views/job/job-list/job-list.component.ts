@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Job } from 'src/app/Core/Models/job';
 
 @Component({
   selector: 'app-job-list',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./job-list.component.scss']
 })
 export class JobListComponent {
-
+  jobTitles : Job [] = [];
 }

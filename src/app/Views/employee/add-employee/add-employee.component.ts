@@ -48,15 +48,13 @@ export class AddEmployeeComponent implements OnInit {
       adress: ['',Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      photo: null
+      photo: [null, Validators.required],
     });
   }
 
   onSubmit() {
     if (this.employeeForm.valid) {
        const employeeData = this.employeeForm.value;
-      // employeeData.photo = this.Image;
-      // employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
       const formData = new FormData();
     formData.append('fullName', employeeData.fullName);
     formData.append('jobId', employeeData.jobId);
@@ -70,11 +68,6 @@ export class AddEmployeeComponent implements OnInit {
       formData.set('photo',this.image)
      }
 
-    // Object.keys(employeeData).forEach((key) => {
-    //   employeeModel.append(key, employeeData[key]);
-    // });
-
-      // Perform submission logic (e.g., send data to server)
       console.log('Employee data submitted:', formData);
         this.employeeService.createEmployee(formData).subscribe(res => {
           if (res.succeeded) {
@@ -87,7 +80,7 @@ export class AddEmployeeComponent implements OnInit {
             })
           }
         }, err => {
-  
+
           if (err.error.errors && err.error.errors.length > 0) {
             let arr = []
             for (const key in err.error.errors) {
@@ -104,7 +97,7 @@ export class AddEmployeeComponent implements OnInit {
             })
           }
         })
-  
+
       }
     }
 
@@ -113,15 +106,15 @@ export class AddEmployeeComponent implements OnInit {
         next: (res) => {
           if(res)
           {
-            this.departments = res.data;  
-            console.log(this.departments);             
+            this.departments = res.data;
+            console.log(this.departments);
           }
           else{
-           this.departments = []          
+           this.departments = []
           }
-        }, 
+        },
         error: (err) => {
-          this.departments = []          
+          this.departments = []
         }
       })
     }
@@ -131,15 +124,15 @@ export class AddEmployeeComponent implements OnInit {
         next: (res) => {
           if(res.succeeded)
           {
-             this.jobTitles = res.data;       
-       
+             this.jobTitles = res.data;
+
           }
           else{
-            this.jobTitles = []          
+            this.jobTitles = []
           }
-        }, 
+        },
         error: (err) => {
-           this.jobTitles = []           
+           this.jobTitles = []
         }
       })
     }
