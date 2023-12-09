@@ -175,7 +175,6 @@ export class EmployeeListComponent implements OnInit {
       formData.set('photo',this.image)
      }
 
-      console.log('Employee data submitted:', formData);
       this.edit=false
       this.employeeService.editEmployee(formData).subscribe(res => {
           if (res.succeeded) {
@@ -187,7 +186,7 @@ export class EmployeeListComponent implements OnInit {
             this.employeeForm.patchValue({
 
             })
-            // this.router.navigate(['/clients/all-clients'])
+
           }
           else {
             Swal.fire({

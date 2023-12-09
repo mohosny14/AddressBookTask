@@ -11,6 +11,8 @@ import { EmployeeModule } from './Views/employee/employee.module';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { AuthModule } from './Views/auth/auth.module';
+import { JobModule } from './Views/job/job.module';
+import { DepartmentModule } from './Views/department/department.module';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { AuthModule } from './Views/auth/auth.module';
     EmployeeModule,
     CommonModule,
     AuthModule,
+    JobModule,
+    DepartmentModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

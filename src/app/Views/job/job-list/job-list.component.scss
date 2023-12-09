@@ -1,0 +1,16 @@
+.popup{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  .content{
+      height: 50vh;
+      width: 30vw;
+      overflow-y: scroll;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #FFF;
+}
+}

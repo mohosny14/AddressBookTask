@@ -13,4 +13,16 @@ export class JobService {
   getAllJobs() {
     return this.commonHttp.CommonGetRequests(environment.baseUrl + HttPaths.API_GET_ALL_JOBS);
   }
+  createJob(model: any) {
+    return this.commonHttp.CommonPostRequests(model, environment.baseUrl + HttPaths.API_CREATE_JOB);
+  }
+
+  editJob(model: any) {
+    return this.commonHttp.CommonPutRequests(model, environment.baseUrl + HttPaths.API_EDIT_JOB);
+  }
+
+  deleteJob(id:number){
+    return this.commonHttp.CommonDeleteRequest(environment.baseUrl + HttPaths.API_DELETE_JOB_BY_ID + id);
+
+  }
 }
