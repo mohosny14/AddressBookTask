@@ -8,6 +8,7 @@ import { Job } from 'src/app/Core/Models/job';
 import { DepartmentService } from 'src/app/Core/Services/department.service';
 import { EmployeeService } from 'src/app/Core/Services/employee.service';
 import { JobService } from 'src/app/Core/Services/job.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-employee',
@@ -79,11 +80,13 @@ export class AddEmployeeComponent implements OnInit {
       console.log('Employee data submitted:', employeeData);
         this.employeeService.createEmployee(employeeData).subscribe(res => {
           if (res.succeeded) {
-           // this.toaster.openSuccessToaster('تم الحفظ بنجاح')
             this.router.navigate(['/clients/all-clients'])
           }
           else {
-            //this.toaster.openErrorToaster(res.message)
+            Swal.fire({
+              icon: 'error',
+              text: res.message,
+            })
           }
         }, err => {
   
@@ -97,7 +100,10 @@ export class AddEmployeeComponent implements OnInit {
             //this.openErrorToaster(arr.join(','))
           }
           else {
-            //this.toaster.openErrorToaster(err.error.message)
+            Swal.fire({
+              icon: 'error',
+              text: err.error.message,
+            })
           }
         })
   

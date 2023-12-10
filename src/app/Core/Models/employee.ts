@@ -19,8 +19,8 @@ export interface Employee {
     email: string;
     password: string;
     age: number;
-    JobName: string;
-    DepartmentName: string;
+    jobName: string;
+    departmentName: string;
     Photo: File; 
   }
   
