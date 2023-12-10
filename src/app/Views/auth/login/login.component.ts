@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/Core/Services/auth.service';
 
@@ -11,7 +12,10 @@ import { AuthService } from 'src/app/Core/Services/auth.service';
 export class LoginComponent implements OnInit  {
   loginForm: FormGroup;
 
-  constructor(private authService:AuthService,private fb: FormBuilder,private toastr: ToastrService) {
+  constructor(private authService:AuthService,
+              private fb: FormBuilder,
+              private toastr: ToastrService,
+              private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -24,13 +28,19 @@ export class LoginComponent implements OnInit  {
   onSubmit(): void {
     this.authService.login(this.loginForm.value).subscribe(response => {
       if(response.succeeded == true){
-        this.toastr.success('Login successful!', 'Success');
+        console.log('success');
+        this.router.navigate(['/add-employee']);
+        //this.toastr.success('Login successful!', 'Success');
       }else{
-        this.toastr.error('Login failed. Please check your credentials.', 'Error');
+       // this.toastr.error('Login failed. Please check your credentials.', 'Error');
       }
     }, error => {
       console.error('Error:', error);
     });
+  }
+
+  navi(){
+    this.router.navigate(['/add-employee']);
   }
 
 }
