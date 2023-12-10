@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './Views/auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { AuthModule } from './Views/auth/auth.module';
 import { JobModule } from './Views/job/job.module';
 import { DepartmentModule } from './Views/department/department.module';
 import { AuthGuard } from './Core/Guards/auth.guard';
+import { TokenInterceptorInterceptor } from './Core/interceptor/token.interceptor';
 
 
 @NgModule({
@@ -32,7 +33,11 @@ import { AuthGuard } from './Core/Guards/auth.guard';
     JobModule,
     DepartmentModule
   ],
-  providers: [DatePipe , AuthGuard],
+  providers: [DatePipe , AuthGuard , {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
