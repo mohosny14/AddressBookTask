@@ -59,12 +59,12 @@
     
                   <div class="col-md-6">
                     <label for="photo" class="form-label">Photo:</label>
-                    <input type="file" id="photo" class="form-control" formControlName="photo">
+                    <input type="file" (change)="UploadFile($event)" id="photo" class="form-control" formControlName="photo">
                   </div>
               </div>
               <div class="mb-3">
                 <label for="adress" class="form-label">Address:</label>
-                <input type="text" (change)="UploadFile($event)" id="adress" class="form-control" formControlName="adress">
+                <input type="text"  id="adress" class="form-control" formControlName="adress">
               </div>
               <button type="submit" class="btn btn-primary w-100" [disabled]="employeeForm.invalid">Submit</button>
             </form>

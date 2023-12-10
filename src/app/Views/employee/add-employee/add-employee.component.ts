@@ -20,7 +20,7 @@ export class AddEmployeeComponent implements OnInit {
   maxDate: string = '';
   jobTitles : Job [] = [];
   departments :Department [] = [];
-  ImageUrl : any
+  Image : any
   employee: EmployeeModel = {} as EmployeeModel
 
 
@@ -30,9 +30,6 @@ export class AddEmployeeComponent implements OnInit {
     const today = new Date();
     this.maxDate = today.toISOString().split('T')[0];
   }
-
-  //jobTitles = ['Software Engineer', 'Product Manager', 'Designer', 'Other'];
-  //departments = ['IT', 'HR', 'Finance', 'Marketing', 'Other'];
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -50,7 +47,7 @@ export class AddEmployeeComponent implements OnInit {
       adress: ['',Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      photo: ['']
+      photo: null
     });
   }
 
@@ -58,26 +55,29 @@ export class AddEmployeeComponent implements OnInit {
     if (this.employeeForm.valid) {
       alert('1');
       const employeeData = this.employeeForm.value;
-      const formData = new FormData();
-    formData.append('fullName', employeeData.fullName);
-    formData.append('jobId', employeeData.jobId);
-    formData.append('departmentId', employeeData.departmentId);
-    formData.append('mobileNumber', employeeData.mobileNumber);
-    formData.append('birthDate', this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss')??'')
-    formData.append('adress', employeeData.adress);
-    formData.append('email', employeeData.email);
+      employeeData.photo = this.Image;
+      employeeData.birthDate = this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss');
+      //const formData = new FormData();
+    // formData.append('fullName', employeeData.fullName);
+    // formData.append('jobId', employeeData.jobId);
+    // formData.append('departmentId', employeeData.departmentId);
+    // formData.append('mobileNumber', employeeData.mobileNumber);
+    // formData.append('birthDate', this.datePipe.transform(employeeData.birthDate, 'yyyy-MM-ddTHH:mm:ss')??'')
+    // formData.append('adress', employeeData.adress);
+    // formData.append('email', employeeData.email);
+    console.log(employeeData);
     //formData.append('photo', employeeData.photo);
-    if(this.ImageUrl){
-      formData.append('photo',this.ImageUrl)
-     }
+    // if(this.Image){
+    //   formData.append('photo',this.Image,'imageName')
+    //  }
 
     // Object.keys(employeeData).forEach((key) => {
     //   employeeModel.append(key, employeeData[key]);
     // });
 
       // Perform submission logic (e.g., send data to server)
-      console.log('Employee data submitted:', this.employeeForm.value);
-        this.employeeService.createEmployee(formData).subscribe(res => {
+      console.log('Employee data submitted:', employeeData);
+        this.employeeService.createEmployee(employeeData).subscribe(res => {
           if (res.succeeded) {
            // this.toaster.openSuccessToaster('تم الحفظ بنجاح')
             this.router.navigate(['/clients/all-clients'])
@@ -139,7 +139,11 @@ export class AddEmployeeComponent implements OnInit {
         }
       })
     }
-    UploadFile(e:any){
-      this.ImageUrl = e.target.files[0];
+
+    UploadFile(event: any): void {
+      const fileList: FileList = event.target.files;
+      if (fileList.length > 0) {
+        this.Image = fileList[0];
+      }
     }
 }

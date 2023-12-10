@@ -14,7 +14,7 @@ export class AuthService {
   login(loginData: Login) {
     return this.commonHttp.CommonPostRequests(loginData, environment.baseUrl + HttPaths.API_LOGIN_URL);
   }
-  createUser(model: Register) {
+  register(model: Register) {
     return this.commonHttp.CommonPostRequests(model, environment.baseUrl + HttPaths.API_CREATE_USER);
   }
 }

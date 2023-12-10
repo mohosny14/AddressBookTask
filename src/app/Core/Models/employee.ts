@@ -21,6 +21,6 @@ export interface Employee {
     age: number;
     JobName: string;
     DepartmentName: string;
-    PhotoUrl: string; 
+    Photo: File; 
   }
   

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/Core/Services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -28,10 +29,16 @@ export class LoginComponent implements OnInit  {
   onSubmit(): void {
     this.authService.login(this.loginForm.value).subscribe(response => {
       if(response.succeeded == true){
-        console.log('success');
+        Swal.fire({
+          icon: 'success',
+          text:'Login successful!',
+        }) 
         this.router.navigate(['/add-employee']);
-        //this.toastr.success('Login successful!', 'Success');
       }else{
+        Swal.fire({
+          icon: 'error',
+          text: response.message,
+        })
        // this.toastr.error('Login failed. Please check your credentials.', 'Error');
       }
     }, error => {
