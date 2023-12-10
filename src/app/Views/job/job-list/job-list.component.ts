@@ -117,4 +117,7 @@ export class JobListComponent {
     addNew(){
       this.router.navigate(['/add-job']);
     }
+    onCancel() {
+      this.edit = false;
+    }
 }

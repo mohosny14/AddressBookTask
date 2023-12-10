@@ -138,4 +138,7 @@ export class AddEmployeeComponent implements OnInit {
     UploadFile(event: any) {
       this.image = event.target.files[0];
     }
+    // onCancel() {
+    //   this.edit = false;
+    // }
 }

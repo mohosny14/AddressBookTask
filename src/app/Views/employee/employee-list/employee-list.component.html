@@ -70,6 +70,7 @@
   <div class="content">
 
     <div class="card-body">
+      <button type="button" class="btn btn-danger float-end" (click)="onCancel()">X</button>
 
       <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
 

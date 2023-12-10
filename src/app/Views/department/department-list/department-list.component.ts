@@ -118,4 +118,7 @@ export class DepartmentListComponent {
     addNew(){
       this.router.navigate(['/add-department']);
     }
+    onCancel() {
+      this.edit = false;
+    }
 }

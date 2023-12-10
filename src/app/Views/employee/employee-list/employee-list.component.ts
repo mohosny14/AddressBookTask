@@ -73,6 +73,9 @@ export class EmployeeListComponent implements OnInit {
       }
     })
   }
+  onCancel() {
+    this.edit = false;
+  }
   getDepartments() {
     this.departmentService.getAllDepartments().subscribe({
       next: (res) => {
