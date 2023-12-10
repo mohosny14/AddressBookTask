@@ -6,22 +6,22 @@
             <h4 class="mb-0">Add New Employee</h4>
           </div>
           <div class="card-body">
-  
+
             <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-  
+
               <div class="row mb-3">
                 <div class="col-md-6">
                   <label for="fullName" class="form-label">Full Name:</label>
                   <input type="text" id="fullName" class="form-control" formControlName="fullName">
                 </div>
-  
+
                 <div class="col-md-6">
                   <label for="mobileNumber" class="form-label">Mobile Number:</label>
                   <input type="text" id="mobileNumber" class="form-control" formControlName="mobileNumber"
                          placeholder="ex: 01123456789">
                 </div>
               </div>
-  
+
               <div class="row mb-3">
                 <div class="col-md-6">
                   <label for="departmentId" class="form-label">Department:</label>
@@ -30,7 +30,7 @@
                     <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
                   </select>
                 </div>
-  
+
                 <div class="col-md-6">
                   <label for="jobId" class="form-label">Job Title:</label>
                   <select id="jobId" class="form-select" formControlName="jobId">
@@ -39,7 +39,7 @@
                   </select>
                 </div>
               </div>
-              
+
               <div class="row mb-3">
                 <div class="col-md-6">
                   <label for="email" class="form-label">Email:</label>
@@ -50,16 +50,17 @@
                   <input type="password" id="password" class="form-control" formControlName="password">
                 </div>
               </div>
-  
+
               <div class="row mb-3">
                   <div class="col-md-6">
                     <label for="birthDate" class="form-label">Date of Birth:</label>
                     <input type="date" id="birthDate" class="form-control" formControlName="birthDate" [max]="maxDate">
                   </div>
-    
+
                   <div class="col-md-6">
                     <label for="photo" class="form-label">Photo:</label>
-                    <input type="file" (change)="UploadFile($event)" id="photo" class="form-control" formControlName="photo">
+                    <input type="file" (change)="UploadFile($event)" id="photo" class="form-control"
+                    formControlName="photo" accept=".jpg, .jpeg, .png, .gif">
                   </div>
               </div>
               <div class="mb-3">
@@ -73,4 +74,3 @@
       </div>
     </div>
   </div>
-  

@@ -95,8 +95,6 @@ export class DepartmentListComponent {
       this.edit=false
       this.departmentService.editDepartment(this.departmentForm.value).subscribe(res => {
           if (res.succeeded) {
-            console.log(res);
-
             this.getDepartment()
             Swal.fire({
               icon: 'success',

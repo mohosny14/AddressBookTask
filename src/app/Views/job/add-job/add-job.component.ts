@@ -39,11 +39,8 @@ export class AddJobComponent {
   }
   onSubmit() {
     if (this.jobForm.valid) {
-
-      console.log(this.jobForm.value);
       this.jobService.createJob(this.jobForm.value).subscribe(res => {
           if (res.succeeded) {
-            console.log(res);
             Swal.fire({
               icon: 'success',
               text: 'Added Successfully!',

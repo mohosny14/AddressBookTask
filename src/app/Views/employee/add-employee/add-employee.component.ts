@@ -68,7 +68,6 @@ export class AddEmployeeComponent implements OnInit {
       formData.set('photo',this.image)
      }
 
-      console.log('Employee data submitted:', formData);
         this.employeeService.createEmployee(formData).subscribe(res => {
           if (res.succeeded) {
             this.router.navigate(['/clients/all-clients'])
@@ -107,7 +106,6 @@ export class AddEmployeeComponent implements OnInit {
           if(res)
           {
             this.departments = res.data;
-            console.log(this.departments);
           }
           else{
            this.departments = []

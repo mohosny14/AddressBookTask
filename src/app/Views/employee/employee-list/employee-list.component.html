@@ -6,7 +6,7 @@
         </div>
         <div class="col-2">
             <div class="row d-flex">
-                <div  class="col-10 d-flex justify-content-end"> 
+                <div  class="col-10 d-flex justify-content-end">
                     <button type="button" (click)="exportToExcel(employees)" >Export to Excel</button>
                 </div>
             </div>
@@ -17,7 +17,7 @@
 <div class="card mt-3">
 
     <table class="table table-striped" *ngIf="employees && employees.length > 0">
-    
+
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -28,6 +28,7 @@
             <th scope="col">Age</th>
             <th scope="col">Adress</th>
             <th scope="col">Birth Date</th>
+            <th scope="col">Employee Image</th>
             <th scope="col" class="ps-5">Actions</th>
           </tr>
         </thead>
@@ -41,6 +42,9 @@
             <td>{{item.age}}</td>
             <td>{{item.adress}}</td>
             <td>{{item.birthDate | date:'yyyy/MM/dd'}}</td>
+            <td>
+              <img  style="width: 80px; height: 60px;" *ngIf="item.photoUrl" [src]="item.photoUrl" alt="{{ item.fullName }}" />
+            </td>
             <td class="row">
                 <div class="col-4 me-1">
                 <!-- Edit button -->
@@ -64,9 +68,9 @@
 
 <div *ngIf="edit" class="popup d-flex justify-content-center align-items-center">
   <div class="content">
-    
+
     <div class="card-body">
-  
+
       <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
 
         <div class="row mb-3">
@@ -99,7 +103,7 @@
             </select>
           </div>
         </div>
-        
+
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="email" class="form-label">Email:</label>

@@ -94,8 +94,6 @@ export class JobListComponent {
       this.edit=false
       this.jobService.editJob(this.jobForm.value).subscribe(res => {
           if (res.succeeded) {
-            console.log(res);
-
             this.getJobs()
             Swal.fire({
               icon: 'success',

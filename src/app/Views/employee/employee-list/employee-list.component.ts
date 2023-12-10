@@ -17,7 +17,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./employee-list.component.scss','../add-employee/add-employee.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
-  employees: Employee[] = [];
+  employees: any[] = [];
   jobTitles : Job [] = [];
   departments :Department [] = [];
   edit:boolean=false
@@ -58,9 +58,11 @@ export class EmployeeListComponent implements OnInit {
       next: (res) => {
         if(res.succeeded)
         {
+          res.data.forEach((item: { photoUrl: string; }) => {
+            item.photoUrl = 'https://localhost:44318'+item.photoUrl.split('wwwroot')[1];
+            item.photoUrl = item.photoUrl.replace(/\\/g, "/");
+          });
            this.employees = res.data;
-           console.log(this.employees)
-
         }
         else{
           this.employees = []
@@ -77,7 +79,6 @@ export class EmployeeListComponent implements OnInit {
         if(res)
         {
           this.departments = res.data;
-          console.log(this.departments);
         }
         else{
          this.departments = []

@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'AddressBookTask';
-constructor(private router:Router){
-
-}
+constructor(private router:Router){}
   logOut(){
     localStorage.clear();
     this.router.navigate(['/login']);

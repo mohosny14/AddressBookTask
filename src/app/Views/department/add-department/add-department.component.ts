@@ -35,10 +35,8 @@ export class AddDepartmentComponent {
   }
   onSubmit() {
     if (this.departmentForm.valid) {
-      console.log(this.departmentForm.value);
       this.departmentService.createDepartment(this.departmentForm.value).subscribe(res => {
           if (res.succeeded) {
-            console.log(res);
             Swal.fire({
               icon: 'success',
               text: 'Added Successfully!',
