@@ -32,7 +32,7 @@ import { AuthGuard } from './Core/Guards/auth.guard';
     JobModule,
     DepartmentModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe , AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

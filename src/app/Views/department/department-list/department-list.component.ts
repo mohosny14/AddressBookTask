@@ -3,9 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Job } from 'src/app/Core/Models/job';
 import { DepartmentService } from 'src/app/Core/Services/department.service';
-import { JobService } from 'src/app/Core/Services/job.service';
 import Swal from 'sweetalert2';
 
 @Component({

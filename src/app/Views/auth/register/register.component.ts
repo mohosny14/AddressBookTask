@@ -52,7 +52,10 @@ export class RegisterComponent implements OnInit {
         })
       }
     }, error => {
-      console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        text: error.error.message,
+      })
     });
   }
 }

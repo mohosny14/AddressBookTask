@@ -16,14 +16,14 @@ const routes: Routes = [
   //   loadChildren: () =>
   //     import('./home/home.module').then((m) => m.HomeModule),
   // },
-  { path: 'add-employee', component: AddEmployeeComponent},
+  { path: 'add-employee', component: AddEmployeeComponent,canActivate:[AuthGuard] },
   { path: 'jobs', component: JobListComponent,canActivate:[AuthGuard] },
   { path: 'add-job', component: AddJobComponent,canActivate:[AuthGuard] },
-  { path: 'departments', component: DepartmentListComponent },
-  { path: 'add-department', component: AddDepartmentComponent},
+  { path: 'departments', component: DepartmentListComponent,canActivate:[AuthGuard]  },
+  { path: 'add-department', component: AddDepartmentComponent,canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'employees', component: EmployeeListComponent },
+  { path: 'employees', component: EmployeeListComponent,canActivate:[AuthGuard] },
   {path:'',redirectTo:'login',pathMatch:'full'}
 ];
 
