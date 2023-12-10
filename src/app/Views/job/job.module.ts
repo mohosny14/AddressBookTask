@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JobListComponent } from './job-list/job-list.component';
 import { AddJobComponent } from './add-job/add-job.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +12,7 @@ import { AddJobComponent } from './add-job/add-job.component';
     AddJobComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ]
 })
 export class JobModule { }
